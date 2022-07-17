@@ -44,15 +44,23 @@ const Sidebar = () => {
               <Text ml={5} h={5} fontWeight='bold' fontSize='sm' display={navSize === 'small' ? 'none' : 'flex'}>Finance Tracker</Text>
             </Flex>
           {
-            menuItems.map((item) => {
-              return (<NavItem navSize={navSize} icon={item.icon} title={item.title} to={item.path} />)
+            menuItems.map((item, index) => {
+              return (
+                <NavItem 
+                  key={`${item.title}-${index}`}
+                  navSize={navSize} 
+                  icon={item.icon} 
+                  title={item.title} 
+                  to={item.path} 
+                />
+              )
             })
           }
         </Flex>
         <Flex
           flexDir='column'
           w='100%'
-          alignItems='center'
+          alignItems='flex-start'
           mb={4}
         >
             <Divider display={navSize === 'small' ? 'none' : 'flex'} />

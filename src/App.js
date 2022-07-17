@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { 
   Accounts,
@@ -13,7 +12,7 @@ import {
  } from './pages'
 import { Sidebar } from './components'
 
-function App() {
+const App = () => {
   return (
       <BrowserRouter>
         <Routes>
