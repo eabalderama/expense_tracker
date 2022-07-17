@@ -1,41 +1,35 @@
-import React from 'react';
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
-import { Logo } from './Logo';
+import React from 'react'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { 
+  Accounts,
+  Categories,
+  Dashboard,
+  Expenses,
+  Login,
+  NotFound,
+  Profile,
+  Signup,
+  Settings
+ } from './pages'
+import { Sidebar } from './components'
 
 function App() {
   return (
-    <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
-    </ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Sidebar />} >
+            <Route index element={<Dashboard />} />
+            <Route path='accounts' element={<Accounts />} />
+            <Route path='expenses' element={<Expenses />} />
+            <Route path='categories' element={<Categories />} />
+            <Route path='settings' element={<Settings />} />
+            <Route path='profile' element={<Profile />} />
+          </Route>
+          <Route path='login' element={<Login />} />
+          <Route path='signup' element={<Signup />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
   );
 }
 
