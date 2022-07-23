@@ -46,12 +46,12 @@ const textVariants = {
   }
 }
 const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
 
   return(
       <Flex>
           <MotionBox
-            initial='open'
+            initial={false}
             display='flex'
             pos='sticky'
             h='95vh'
