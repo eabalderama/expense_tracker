@@ -19,7 +19,7 @@ const Sidebar = () => {
         marginLeft={2}
         boxShadow='0 4px 12px 0 rgba(0,0,0,0.5)'
         borderRadius='15px'
-        w={navSize === 'large' && '200px'}
+        w={navSize === 'large' ? '200px' : 'auto'}
         flexDir='column'
         justifyContent='space-between'
       >
