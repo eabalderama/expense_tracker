@@ -1,88 +1,121 @@
 import { Outlet } from "react-router-dom"
-import { Flex, Divider, Heading, Text, Avatar, Link, Icon } from "@chakra-ui/react"
+import { Flex, Divider, Heading, Text, Avatar, Link, Icon, chakra } from "@chakra-ui/react"
 import { MdMenu } from "react-icons/md";
-import { useState } from "react";
 import NavItem from "./NavItem";
 import { Link as ReactRouterLink } from 'react-router-dom'
 import menuItems from "../../config/sidebar"
+import { motion, isValidMotionProp } from "framer-motion";
+import { useState } from "react";
 
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === 'children',
+})
+
+const variants = {
+  open: { 
+    width: '200px',
+    transition: {
+      ease: 'easeInOut',
+      // when: 'beforeChildren'
+    }
+  },
+  closed: { 
+    width: '50px',
+    transition: {
+      ease: 'easeInOut'
+    }
+  },
+}
+
+const textVariants = {
+  open: {
+    opacity: 1,
+    display: 'flex',
+    transition: {
+      ease: 'easeInOut',
+      duration: 0.5,
+      delay: 0.2
+    }
+  },
+  closed: {
+    opacity: 0,
+    display: 'none',
+    transition: {
+      ease: 'easeInOut'
+    }
+  }
+}
 const Sidebar = () => {
-  const [navSize, changeNavSize] = useState('large')
+  const [isOpen, setIsOpen] = useState(true)
 
   return(
-    <Flex>
-      <Flex
-        pos='sticky'
-        h='95vh'
-        px={1}
-        marginTop='2.5vh'
-        marginLeft={2}
-        boxShadow='0 4px 12px 0 rgba(0,0,0,0.5)'
-        borderRadius='15px'
-        w={navSize === 'large' ? '200px' : 'auto'}
-        flexDir='column'
-        justifyContent='space-between'
-      >
-        <Flex
-          flexDir='column'
-          alignItems='flex-start'
-          as='nav'
-        >
-          <Flex
-            mt={5}
-            p={3}
-            h={5}
-            onClick={() => {
-              if(navSize === 'small'){
-                changeNavSize('large')
-              }else{
-                changeNavSize('small')
-              }
-            }}
+      <Flex>
+          <MotionBox
+            initial='open'
+            display='flex'
+            pos='sticky'
+            h='95vh'
+            px={1}
+            marginTop='2.5vh'
+            marginLeft={2}
+            boxShadow='0 4px 12px 0 rgba(0,0,0,0.5)'
+            borderRadius='15px'
+            flexDir='column'
+            justifyContent='space-between'
+            animate={isOpen ? "open" : "closed"}
+            // @ts-ignore no problem in operation, although type error appears.
+            variants={variants}
           >
-              <Icon as={MdMenu} h={5} fontSize='xl' _hover={{ cursor: 'pointer' }} />
-              <Text ml={5} h={5} fontWeight='bold' fontSize='sm' display={navSize === 'small' ? 'none' : 'flex'}>Finance Tracker</Text>
-            </Flex>
-          {
-            menuItems.map((item, index) => {
-              return (
-                <NavItem 
-                  key={`${item.title}-${index}`}
-                  navSize={navSize} 
-                  icon={item.icon} 
-                  title={item.title} 
-                  to={item.path} 
-                />
-              )
-            })
-          }
-        </Flex>
-        <Flex
-          flexDir='column'
-          w='100%'
-          alignItems='flex-start'
-          mb={4}
-        >
-            <Divider display={navSize === 'small' ? 'none' : 'flex'} />
-            <Link as={ReactRouterLink} to='/profile' _hover={{ textDecor: 'none' }}>
-              <Flex align='center' h={100} px={2}>
-                <Avatar h='28px' w='28px' />
-                <Flex
-                  flexDir='column'
-                  ml={4}
-                  display={navSize === 'small' ? 'none' : 'flex'}
-                >
-                  <Heading as='h3' size='sm'>Edgar Alan Balderama</Heading>
-                  <Text>Admin</Text>
+            <Flex flexDir='column' alignItems='flex-start' as='nav'>
+              <Flex
+                mt={5}
+                p={3}
+                h={5}
+                onClick={() => setIsOpen(isOpen => !isOpen)}
+              >
+                  <Icon as={MdMenu} h={5} fontSize='xl' _hover={{ cursor: 'pointer' }} />
+                  <Text as={motion.div} ml={5} h={5} fontWeight='bold' fontSize='sm' variants={textVariants} animate={isOpen ? "open" : "closed"}>Finance Tracker</Text>
                 </Flex>
+              {
+                menuItems.map((item, index) => {
+                  return (
+                    <NavItem 
+                      key={`${item.title}-${index}`}
+                      isOpen={isOpen} 
+                      icon={item.icon} 
+                      title={item.title} 
+                      to={item.path} 
+                    />
+                  )
+                })
+              }
+            </Flex>
+              <Flex
+                flexDir='column'
+                w='100%'
+                alignItems='flex-start'
+                mb={4}
+              >
+                  <Divider display={!isOpen ? 'none' : 'flex'} />
+                  <Link as={ReactRouterLink} to='/profile' _hover={{ textDecor: 'none' }}>
+                    <Flex align='center' h={100} px={2}>
+                      <Avatar h='28px' w='28px' />
+                      <Flex
+                        as={motion.div}
+                        flexDir='column'
+                        ml={4}
+                        variants={textVariants} animate={isOpen ? "open" : "closed"}
+                        // display={!isOpen ? 'none' : 'flex'}
+                      >
+                        <Heading as='h3' size='sm'>Edgar Alan Balderama</Heading>
+                        <Text>Admin</Text>
+                      </Flex>
+                    </Flex>
+                  </Link>
               </Flex>
-            </Link>
-            
-
-        </Flex>
+          </MotionBox>
+        <Outlet />
       </Flex>
-      <Outlet />
-    </Flex>
   )
 }
 
