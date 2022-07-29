@@ -1,11 +1,13 @@
 import React from 'react'
-import {Text} from '@chakra-ui/react'
+import {Text, Container} from '@chakra-ui/react'
 
 const Accounts = () => {
   return(
-    <Text>
-      Accounts
-    </Text>
+    <Container>
+      <Text>
+        Accounts
+      </Text>
+    </Container>
   )
 }
 

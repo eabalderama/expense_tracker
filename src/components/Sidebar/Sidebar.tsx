@@ -6,6 +6,7 @@ import { Link as ReactRouterLink } from 'react-router-dom'
 import menuItems from "../../config/sidebar"
 import { motion, isValidMotionProp } from "framer-motion";
 import { useState } from "react";
+import { ColorModeSwitcher } from "../../ColorModeSwitcher";
 
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === 'children',
@@ -16,7 +17,6 @@ const variants = {
     width: '200px',
     transition: {
       ease: 'easeInOut',
-      // when: 'beforeChildren'
     }
   },
   closed: { 
@@ -96,22 +96,23 @@ const Sidebar = () => {
                 alignItems='flex-start'
                 mb={4}
               >
-                  <Divider display={!isOpen ? 'none' : 'flex'} />
-                  <Link as={ReactRouterLink} to='/profile' _hover={{ textDecor: 'none' }}>
-                    <Flex align='center' h={100} px={2}>
-                      <Avatar h='28px' w='28px' />
-                      <Flex
-                        as={motion.div}
-                        flexDir='column'
-                        ml={4}
-                        variants={textVariants} animate={isOpen ? "open" : "closed"}
-                        // display={!isOpen ? 'none' : 'flex'}
-                      >
-                        <Heading as='h3' size='sm'>Edgar Alan Balderama</Heading>
-                        <Text>Admin</Text>
-                      </Flex>
+                <ColorModeSwitcher/>
+                <Divider  />
+                <Link as={ReactRouterLink} to='/profile' _hover={{ textDecor: 'none' }}>
+                  <Flex align='center' h={100} px={2}>
+                    <Avatar h='28px' w='28px' />
+                    <Flex
+                      as={motion.div}
+                      flexDir='column'
+                      ml={4}
+                      variants={textVariants} animate={isOpen ? "open" : "closed"}
+                      // display={!isOpen ? 'none' : 'flex'}
+                    >
+                      <Heading as='h3' size='sm'>Edgar Alan Balderama</Heading>
+                      <Text>Admin</Text>
                     </Flex>
-                  </Link>
+                  </Flex>
+                </Link>
               </Flex>
           </MotionBox>
         <Outlet />

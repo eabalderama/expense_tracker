@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { Flex, Icon, Link, Menu, MenuButton, Text, Box } from "@chakra-ui/react"
+import React from 'react'
+import { Flex, Icon, Link, Menu, MenuButton, Text } from "@chakra-ui/react"
 import { IconType } from "react-icons"
 import { NavLink as ReactRouterLink } from 'react-router-dom'
-import { motion, isValidMotionProp } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface NavItemProps {
   isOpen: boolean;

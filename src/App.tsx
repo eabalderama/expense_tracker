@@ -10,13 +10,13 @@ import {
   Signup,
   Settings
  } from './pages'
-import { Sidebar } from './components'
+import { Navbar } from './components'
 
 const App = () => {
   return (
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Sidebar />} >
+          <Route path='/' element={<Navbar />} >
             <Route index element={<Dashboard />} />
             <Route path='accounts' element={<Accounts />} />
             <Route path='expenses' element={<Expenses />} />
